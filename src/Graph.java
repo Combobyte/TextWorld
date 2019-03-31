@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,10 +48,12 @@ public class Graph {
 
         private String name;
         HashMap<String, Node> connections;
+        private ArrayList<Item> items;
 
         private Node(String s){
             name = s;
             connections = new HashMap<>();
+            items = new ArrayList<>();
         }
 
         private Node(){
@@ -60,6 +63,48 @@ public class Graph {
 
         private void addConnection(Node n){
             connections.put(n.getName(), n);
+        }
+
+        public void addItem(Item i){
+            items.add(i);
+        }
+
+        public ArrayList<Item> getItems(){
+            return items;
+        }
+
+        public Item removeItem(String name){
+            Item i = new Item();
+            boolean found = false;
+            for(Item item : items){
+                if(item.getName().equals(name)){
+                    i = item;
+                    found = true;
+                }
+            }
+            if(!found){
+                return null;
+            }
+            items.remove(i);
+            return i;
+        }
+
+        public void displayItems(){
+            String out = "";
+            for(Item i : items){
+                out+= " " + i.getName();
+            }
+            out = out.trim();
+            System.out.println(out);
+        }
+
+        public void displayConnections(){
+            String out = "";
+            for(String key : connections.keySet()){
+                out += " " + connections.get(key).getName();
+            }
+            out = out.trim();
+            System.out.println(out);
         }
 
         public String getName(){

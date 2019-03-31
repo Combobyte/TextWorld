@@ -3,11 +3,14 @@ import java.util.ArrayList;
 public class Player {
 
     private ArrayList<Item> inventory;
-    String name;
+    private String name;
+    private String desc;
+    private Graph.Node currentRoom;
 
-    public Player(String n){
+    public Player(String n, String desc){
         name = n;
         inventory = new ArrayList<>();
+        this.desc = desc;
     }
 
     public String getName(){
@@ -32,5 +35,13 @@ public class Player {
         }
         inventory.remove(i);
         return i;
+    }
+
+    public Graph.Node getCurrentRoom(){
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Graph.Node room){
+        currentRoom = room;
     }
 }
