@@ -23,6 +23,11 @@ public class Graph {
         return null;
     }
 
+    public Graph.Node getRandomRoom(){
+        ArrayList<Graph.Node> rooms = new ArrayList<>(nodes.values());
+        return rooms.get((int)(Math.random() * rooms.size()));
+    }
+
     public void addUndirectedEdge(String name, String connection) {
         Graph.Node firstNode = getNode(name);
         Graph.Node connectionNode = getNode(connection);
@@ -59,6 +64,14 @@ public class Graph {
         private Node(){
             name = "";
             connections = new HashMap<>();
+        }
+
+        public Graph.Node getRandomRoom(){
+            ArrayList<Graph.Node> rooms = new ArrayList<>(connections.values());
+            if(rooms.size() == 0){
+                return null;
+            }
+            return rooms.get((int)(Math.random() * rooms.size()));
         }
 
         private void addConnection(Node n){

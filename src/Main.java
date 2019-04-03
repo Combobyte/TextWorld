@@ -25,8 +25,21 @@ public class Main {
         Player p = new Player("guy", "just a dude");
         p.setCurrentRoom(g.getNode("hall"));
 
+        ArrayList<Creature> creatures = new ArrayList<>();
+        for(int i = 0; i < 30; i++){
+            creatures.add(new Chicken(g.getRandomRoom(), "chicken", "Cannot conscript into the army", p));
+        }
+
         while (!response.equals("quit")){
+            int numCreatures = 0;
+            for(Creature c : creatures){
+                if(c.isWithPlayer()){
+                    numCreatures++;
+                }
+            }
+            boolean moveCreatures = true;
             System.out.println("You are currently in the: " + p.getCurrentRoom().getName());
+            System.out.println("There are " + numCreatures + " creatures in the room");
             System.out.println("What do you want to do?");
             response = s.nextLine();
             if(response.indexOf("go ") == 0){
@@ -59,6 +72,8 @@ public class Main {
                 p.getCurrentRoom().displayConnections();
                 System.out.println("The items in the room are: ");
                 p.getCurrentRoom().displayItems();
+                displayNumbersOfAnimals(creatures);
+                moveCreatures = false;
             }else if(response.indexOf("take ") == 0) {
                 String arr[] = response.split(" ");
                 String reconstructed = "";
@@ -75,6 +90,7 @@ public class Main {
                 } else {
                     System.out.println("That item does not exist");
                 }
+                moveCreatures = false;
             }else if(response.indexOf("place ") == 0){
                 String arr[] = response.split(" ");
                 String reconstructed = "";
@@ -91,6 +107,7 @@ public class Main {
                 }else{
                     System.out.println("You do not have that item");
                 }
+                moveCreatures = false;
             }else{
                 System.out.println("The commands you can run are:");
                 System.out.println("look: tells you the rooms you can go to");
@@ -99,8 +116,28 @@ public class Main {
                 System.out.println("take <item>: takes said item from the room");
                 System.out.println("place <item>: places said item from your inventory in the room");
                 System.out.println("quit: ends the game");
+                moveCreatures = false;
             }
             System.out.println();
+            if(moveCreatures) {
+                for (Creature c : creatures) {
+                    c.act();
+                }
+            }
         }
+    }
+
+    private static void displayNumbersOfAnimals(ArrayList<Creature> creatures) {
+        int numChickens = 0;
+        int numPopstars = 0;
+        int numWumpus = 0;
+        for(Creature c : creatures){
+            if(c instanceof Chicken && c.isWithPlayer()){
+                numChickens++;
+            }
+        }
+        System.out.println("The number of chickens in the area is " + numChickens);
+        System.out.println("The number of pop stars in the area is " + numPopstars);
+        System.out.println("The number of wumpuses in the area is " + numWumpus);
     }
 }
