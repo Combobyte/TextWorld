@@ -22,7 +22,7 @@ public class Main {
         Scanner s = new Scanner(System.in);
         String response = "";
 
-        Player p = new Player("guy", "just a dude");
+        Player p = new Player("guy", "Got destroyed by meta knight in brawl");
         p.setCurrentRoom(g.getNode("hall"));
 
         ArrayList<Creature> creatures = new ArrayList<>();
@@ -41,7 +41,7 @@ public class Main {
             boolean moveCreatures = true;
             System.out.println("You are currently in the: " + p.getCurrentRoom().getName());
             System.out.println("There are " + numCreatures + " creatures in the room");
-            System.out.println("What do you want to do?");
+            System.out.print("What do you want to do? >");
             response = s.nextLine();
             if(response.indexOf("go ") == 0){
                 String[] arr = response.split(" ");
