@@ -28,6 +28,7 @@ public class Main {
         ArrayList<Creature> creatures = new ArrayList<>();
         for(int i = 0; i < 30; i++){
             creatures.add(new Chicken(g.getRandomRoom(), "chicken", "Cannot conscript into the army", p));
+            creatures.add(new Popstar(g.getRandomRoom(), "wumpus", "A man who was corrupted by using meta knight in brawl", p));
         }
 
         while (!response.equals("quit")){
@@ -68,12 +69,9 @@ public class Main {
                 g.addNode(reconstructed);
                 g.addDirectedEdge(p.getCurrentRoom().getName(), reconstructed);
             }else if(response.equals("look")) {
-                System.out.println("The rooms that you can go to are: ");
-                p.getCurrentRoom().displayConnections();
-                System.out.println("The items in the room are: ");
-                p.getCurrentRoom().displayItems();
-                displayNumbersOfAnimals(creatures);
-                moveCreatures = false;
+                System.out.println("The rooms that you can go to are: " + p.getCurrentRoom().getConnectionsAsString());
+                System.out.println("The items in the room are: " + p.getCurrentRoom().getItemNames());
+                displayNumbersOfAnimals(p);
             }else if(response.indexOf("take ") == 0) {
                 String arr[] = response.split(" ");
                 String reconstructed = "";
@@ -118,7 +116,7 @@ public class Main {
                 System.out.println("quit: ends the game");
                 moveCreatures = false;
             }
-            System.out.println();
+            System.out.println("* * * * * * * * * * * *");
             if(moveCreatures) {
                 for (Creature c : creatures) {
                     c.act();
@@ -127,13 +125,17 @@ public class Main {
         }
     }
 
-    private static void displayNumbersOfAnimals(ArrayList<Creature> creatures) {
+    private static void displayNumbersOfAnimals(Player p) {
+        Graph.Node currRoom = p.getCurrentRoom();
+        ArrayList<Creature> animals = currRoom.getCreatures();
         int numChickens = 0;
         int numPopstars = 0;
         int numWumpus = 0;
-        for(Creature c : creatures){
-            if(c instanceof Chicken && c.isWithPlayer()){
+        for(Creature c : animals){
+            if(c instanceof Chicken){
                 numChickens++;
+            }else if (c instanceof Popstar){
+                numPopstars++;
             }
         }
         System.out.println("The number of chickens in the area is " + numChickens);

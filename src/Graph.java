@@ -54,11 +54,13 @@ public class Graph {
         private String name;
         HashMap<String, Node> connections;
         private ArrayList<Item> items;
+        private ArrayList<Creature> creatures;
 
         private Node(String s){
             name = s;
             connections = new HashMap<>();
             items = new ArrayList<>();
+            creatures = new ArrayList<>();
         }
 
         private Node(){
@@ -72,6 +74,18 @@ public class Graph {
                 return null;
             }
             return rooms.get((int)(Math.random() * rooms.size()));
+        }
+
+        public void addCreature(Creature c){
+            creatures.add(c);
+        }
+
+        public void removeCreature(Creature c){
+            creatures.remove(c);
+        }
+
+        public ArrayList<Creature> getCreatures(){
+            return creatures;
         }
 
         private void addConnection(Node n){
@@ -102,22 +116,22 @@ public class Graph {
             return i;
         }
 
-        public void displayItems(){
+        public String getItemNames(){
             String out = "";
             for(Item i : items){
                 out+= " " + i.getName();
             }
             out = out.trim();
-            System.out.println(out);
+            return out;
         }
 
-        public void displayConnections(){
+        public String getConnectionsAsString(){
             String out = "";
             for(String key : connections.keySet()){
                 out += " " + connections.get(key).getName();
             }
             out = out.trim();
-            System.out.println(out);
+            return out;
         }
 
         public String getName(){
@@ -148,6 +162,14 @@ public class Graph {
                 return null;
             }
             return n;
+        }
+
+        public ArrayList<Graph.Node> getConnections(){
+            ArrayList<Graph.Node> output = new ArrayList<>();
+            for(String key : connections.keySet()){
+                output.add(connections.get(key));
+            }
+            return output;
         }
     }
 

@@ -1,8 +1,8 @@
 public abstract class Creature {
 
     protected String name;
-    protected Graph.Node room;
     protected String description;
+    protected Graph.Node room;
     protected Player player;
 
     public Creature(Graph.Node room, String name, String desc, Player p){
@@ -10,10 +10,29 @@ public abstract class Creature {
         this.room = room;
         this.description = desc;
         this.player = p;
+        room.addCreature(this);
     }
 
-    public void move(Graph.Node room){
-        this.room = room;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void move(Graph.Node newRoom){
+        this.room.removeCreature(this);
+        this.room = newRoom;
+        this.room.addCreature(this);
     }
 
     public boolean isWithPlayer(){
