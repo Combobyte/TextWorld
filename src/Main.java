@@ -1,8 +1,11 @@
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
+
+    private static HashMap<String, Command> commandIds = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -141,5 +144,24 @@ public class Main {
         System.out.println("The number of chickens in the area is " + numChickens);
         System.out.println("The number of pop stars in the area is " + numPopstars);
         System.out.println("The number of wumpuses in the area is " + numWumpus);
+    }
+
+    public static Command getCommand(String command){
+        String id = getFirstWord(command);
+        String value = getLastWord(command);
+        Command c = commandIds.get(id);
+        if(c == null){
+            c = new EmptyCommand();
+        }
+        c.init(value);
+        return c;
+    }
+
+    private static String getLastWord(String command) {
+        return command.substring(command.indexOf(" ") + 1);
+    }
+
+    private static String getFirstWord(String command) {
+        return command.substring(0, command.indexOf(" "));
     }
 }
