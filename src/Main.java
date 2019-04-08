@@ -44,7 +44,7 @@ public class Main {
             boolean moveCreatures = true;
             System.out.println("You are currently in the: " + p.getCurrentRoom().getName());
             System.out.println("There are " + numCreatures + " creatures in the room");
-            System.out.print("What do you want to do? >");
+            System.out.print("> ");
             response = s.nextLine();
             if(response.indexOf("go ") == 0){
                 String[] arr = response.split(" ");
