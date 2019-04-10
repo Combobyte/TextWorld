@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Popstar extends Creature{
 
     public Popstar(Graph.Node room, String name, String desc, Player p){
@@ -6,39 +8,21 @@ public class Popstar extends Creature{
 
     @Override
     public void act() {
-        boolean playerIsNear = false;
-        Graph.Node pRoom = player.getCurrentRoom();
-        for(Graph.Node neighbor : room.getConnections()){
-            if(neighbor.equals(pRoom)){
-                playerIsNear = true;
-            }
+        Graph.Node newRoom = getRoomTowardsPlayer();
+        if(newRoom != null) {
+            move(newRoom);
         }
-        if (room.equals(pRoom)) {
-            playerIsNear = true;
-        }
-        if(playerIsNear){
-            boolean move = true;
-            Graph.Node posMove = room.getRandomRoom();
-            if (posMove == null){
-                return;
-            }
-            int numTrys = 0;
-            while (!(posMove.equals(pRoom))){
-                posMove = room.getRandomRoom();
-                numTrys++;
-                if(numTrys > 12){
-                    move = false;
-                    break;
+    }
+
+    private Graph.Node getRoomTowardsPlayer() {
+        ArrayList<Graph.Node> connections = room.getConnections();
+        for(Graph.Node node : connections){
+            for(Graph.Node connectionNodes : node.getConnections()){
+                if(connectionNodes.equals(player.getCurrentRoom())){
+                    return connectionNodes;
                 }
             }
-            if(move){
-                move(posMove);
-            }
-        }else{
-            Graph.Node posMove = room.getRandomRoom();
-            if(posMove != null){
-                move(posMove);
-            }
         }
+        return null;
     }
 }
