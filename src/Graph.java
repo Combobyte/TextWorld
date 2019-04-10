@@ -54,17 +54,26 @@ public class Graph {
         HashMap<String, Node> connections;
         private ArrayList<Item> items;
         private ArrayList<Creature> creatures;
+        private String desc;
 
         private Node(String s){
             name = s;
             connections = new HashMap<>();
             items = new ArrayList<>();
             creatures = new ArrayList<>();
+            this.desc = "no description";
+        }
+
+        private Node(String s, String desc){
+            name = s;
+            this.desc = desc;
+            connections = new HashMap<>();
+            items = new ArrayList<>();
+            creatures = new ArrayList<>();
         }
 
         private Node(){
-            name = "";
-            connections = new HashMap<>();
+            this("no name", "No description");
         }
 
         public Graph.Node getRandomRoom(){
@@ -170,7 +179,28 @@ public class Graph {
             }
             return output;
         }
-        
-    }
 
+        public String getNumbersOfCreatures(){
+            ArrayList<Entry> nums = new ArrayList<>();
+            for(Creature c : creatures){
+                String animalType = c.getAnimalType();
+                boolean inEntry = false;
+                for(Entry e : nums){
+                    if(e.getName().equals(animalType)){
+                        e.add();
+                        inEntry = true;
+                    }
+                }
+                if(!inEntry){
+                    nums.add(new Entry(animalType));
+                }
+            }
+            String output = "";
+            for(Entry e : nums){
+                output += (e.getNum() + "x " + e.getName() + " ");
+            }
+            output = output.trim();
+            return output;
+        }
+    }
 }

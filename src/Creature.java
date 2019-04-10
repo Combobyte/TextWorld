@@ -4,6 +4,7 @@ public abstract class Creature {
     protected String description;
     protected Graph.Node room;
     protected Player player;
+    protected String animalType;
 
     public Creature(Graph.Node room, String name, String desc, Player p){
         this.name = name;
@@ -40,4 +41,12 @@ public abstract class Creature {
     }
 
     public abstract void act();
+
+    public String getAnimalType() {
+        return animalType;
+    }
+
+    public void setAnimalType(String animalType) {
+        this.animalType = animalType;
+    }
 }

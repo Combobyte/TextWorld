@@ -4,6 +4,7 @@ public class Popstar extends Creature{
 
     public Popstar(Graph.Node room, String name, String desc, Player p){
         super(room, name, desc, p);
+        setAnimalType("popstar");
     }
 
     @Override

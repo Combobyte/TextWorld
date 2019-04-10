@@ -1,5 +1,3 @@
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -8,34 +6,34 @@ public class Main {
     private static HashMap<String, Command> commandIds = new HashMap<>();
 
     public static void main(String[] args) {
-        initializeCommandIds();
         Graph g = new Graph();
-
-        g.addNode("hall");
-        g.addNode("dungeon");
-        g.addNode("closet");
-        g.addNode("castle");
-
-        g.addDirectedEdge("hall", "dungeon");
-        g.addUndirectedEdge("hall", "closet");
-        g.addDirectedEdge("castle", "hall");
-
-        g.getNode("hall").addItem(new Item("box", "box of doom"));
-
         Player p = new Player("guy", "Got destroyed by meta knight in brawl");
-        p.setCurrentRoom(g.getNode("hall"));
-
+        initializeCommandIds(g, p);
+        
         Scanner s = new Scanner(System.in);
         String response = "";
         while (!response.equals("quit")) {
             System.out.print("> ");
             response = s.nextLine();
             Command command = getCommand(response);
-            command.execute();
+            boolean success = command.execute();
+            if(!success){
+                System.out.println("Your action failed!");
+                System.out.println("Some of the commands you can use are: ");
+                System.out.println("take <item>");
+                System.out.println("put <item>");
+                System.out.println("go <room>");
+                System.out.println("look");
+            }
         }
     }
 
-    private static void initializeCommandIds(){
+    private static void initializeCommandIds(Graph graph, Player player){
+        commandIds.put("go", new GoCommand(graph, player));
+        commandIds.put("look", new LookCommand(graph, player));
+        commandIds.put("put", new PutCommand(graph, player));
+        commandIds.put("take", new TakeCommand(graph, player));
+//        commandIds.put("add", new AddRoomCommand(graph, player));
 
     }
 

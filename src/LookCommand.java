@@ -13,6 +13,8 @@ public class LookCommand implements Command {
     @Override
     public boolean execute() {
         Graph.Node playerRoom = player.getCurrentRoom();
+        System.out.println("The rooms you can go to are: " + playerRoom.getConnectionsAsString());
+        System.out.println("The items in the room are: " + playerRoom.getItemNames());
         return true;
     }
 
