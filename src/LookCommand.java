@@ -15,6 +15,7 @@ public class LookCommand implements Command {
         Graph.Node playerRoom = player.getCurrentRoom();
         System.out.println("The rooms you can go to are: " + playerRoom.getConnectionsAsString());
         System.out.println("The items in the room are: " + playerRoom.getItemNames());
+        System.out.println("The creatures in the room are: " + playerRoom.getNumbersOfCreatures());
         return true;
     }
 

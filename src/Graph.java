@@ -15,6 +15,10 @@ public class Graph {
         nodes.put(name, new Graph.Node(name));
     }
 
+    public void addNode(String name, String desc){
+        nodes.put(name, new Graph.Node(name, desc));
+    }
+
     public Graph.Node getNode(String name) {
         for(String s : nodes.keySet()){
             if(nodes.get(s).getName() == name) return nodes.get(s);
@@ -76,6 +80,10 @@ public class Graph {
             this("no name", "No description");
         }
 
+        public String getDesc(){
+            return desc;
+        }
+
         public Graph.Node getRandomRoom(){
             ArrayList<Graph.Node> rooms = new ArrayList<>(connections.values());
             if(rooms.size() == 0){
@@ -127,7 +135,7 @@ public class Graph {
         public String getItemNames(){
             String out = "";
             for(Item i : items){
-                out+= " " + i.getName();
+                out+= " " + i.getName() + ": " + i.getDesc();
             }
             out = out.trim();
             return out;
@@ -136,7 +144,7 @@ public class Graph {
         public String getConnectionsAsString(){
             String out = "";
             for(String key : connections.keySet()){
-                out += " " + connections.get(key).getName();
+                out += " " + connections.get(key).getName() + ": " + connections.get(key).getDesc();
             }
             out = out.trim();
             return out;
@@ -189,6 +197,7 @@ public class Graph {
                     if(e.getName().equals(animalType)){
                         e.add();
                         inEntry = true;
+                        break;
                     }
                 }
                 if(!inEntry){
@@ -201,6 +210,10 @@ public class Graph {
             }
             output = output.trim();
             return output;
+        }
+
+        public String toString(){
+            return name + ": " + desc;
         }
     }
 }

@@ -16,11 +16,17 @@ public class Popstar extends Creature{
     }
 
     private Graph.Node getRoomTowardsPlayer() {
+        if(room.equals(player.getCurrentRoom())){
+            return null;
+        }
         ArrayList<Graph.Node> connections = room.getConnections();
         for(Graph.Node node : connections){
+            if(node.equals(player.getCurrentRoom())){
+                return node;
+            }
             for(Graph.Node connectionNodes : node.getConnections()){
                 if(connectionNodes.equals(player.getCurrentRoom())){
-                    return connectionNodes;
+                    return node;
                 }
             }
         }
