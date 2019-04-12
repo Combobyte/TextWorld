@@ -5,7 +5,7 @@ public class Entry {
 
     public Entry(String creatureName){
         name = creatureName;
-        num = 0;
+        num = 1;
     }
 
     public String getName() {
